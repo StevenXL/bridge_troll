@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   force_ssl if: -> { Rails.env.production? }, unless: :allow_insecure?
 
+  serialization_scope :view_context
+
   protect_from_forgery
 
   rescue_from(ActionView::MissingTemplate) do |e|
