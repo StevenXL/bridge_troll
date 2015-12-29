@@ -18,6 +18,21 @@ window.setupCheckinsPage = (options) ->
   session_id = options.session_id
   rsvpSessions = new Bridgetroll.Collections.RsvpSession()
 
+  initializeCollection = ->
+    type = 'GET'
+    url  =  "/events/#{event_id}/event_sessions/#{session_id}/checkins.json"
+
+    $.ajax({type: type, url: url})
+      .done (response) ->
+        rsvpSessions.set(response)
+        setAddListenerOnCollection()
+
+  setAddListenerOnCollection = ->
+    rsvpSessions.on 'add', (newRsvp) ->
+      console.log('hello')
+
+  initializeCollection()
+
   updateRsvpCounts = (counts) ->
     for role in [Bridgetroll.Enums.Role.STUDENT, Bridgetroll.Enums.Role.VOLUNTEER]
       $('#checked_in_count_' + role).text(counts[role].checkin[session_id])
