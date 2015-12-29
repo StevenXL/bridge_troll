@@ -4,6 +4,7 @@ ruby '2.3.0'
 
 gem 'dotenv-rails', groups: [:development, :test]
 
+gem 'active_model_serializers'
 gem 'rails', '4.2.5'
 gem 'devise', '~> 3.5.0'
 gem 'puma'

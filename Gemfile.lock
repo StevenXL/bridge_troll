@@ -23,6 +23,8 @@ GEM
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
     active_hash (1.4.1)
       activesupport (>= 2.2.2)
+    active_model_serializers (0.9.3)
+      activemodel (>= 3.2)
     activejob (4.2.5)
       activesupport (= 4.2.5)
       globalid (>= 0.3.0)
@@ -345,6 +347,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_hash
+  active_model_serializers
   awesome_print
   backbone-on-rails
   better_errors
@@ -407,4 +410,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
