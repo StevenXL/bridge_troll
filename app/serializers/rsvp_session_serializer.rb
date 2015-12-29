@@ -13,6 +13,7 @@ class RsvpSessionSerializer < ActiveModel::Serializer
 
     if title == "Student"
       data[:levels_event_path] = levels_event_path(object.rsvp.event)
+      data[:student] = true # necessary due to handlebars if statement syntax
     end
 
     data
