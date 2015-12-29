@@ -10,7 +10,7 @@ class CheckinsController < ApplicationController
     ).includes([rsvp: :user]).order('users.first_name asc, users.last_name asc, users.email asc')
     respond_to do |format|
       format.html { @checkin_counts = @event.checkin_counts }
-      format.json { render json: @rsvp_sessions }
+      format.json { render json: @rsvp_sessions, root: false }
     end
   end
 
