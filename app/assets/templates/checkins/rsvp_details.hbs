@@ -1,0 +1,30 @@
+<tr>
+  <td>
+    <img alt="" src="{{user_link}}" width="{{width}}" height="{{height}}" />
+    <a class="user-name" href="{{user_link}}">{{user_full_name}}</a>
+  </td>
+  <td>{{title}}
+    {{#if title == "Student" }}
+      <a href="{{levels_event_path}}">
+      <div class="bridgetroll-badge level-{{class_level}}">
+        {{class_level}}
+      </div>
+      {{#if waitlist_position}}
+        <div style="font-size: 12px;">
+          (#{{waitlist_position}} on waitlist)
+        </div>
+      {{/if}}
+    {{/if}}
+  </td>
+  <td class="checkins-action {{#if checked_in}}checked-in{{/if}}"
+      id="rsvp_session_{{id}}"
+      data-rsvp-session-id="{{id}}"
+      data-user-name="{{user_full_name}}">
+    <div class="toggle_rsvp_session destroy">
+      <i class='fa fa-check-square-o'></i>Checked In! <button name="button" type="submit" class="btn">Un-Check In</button>
+    </div>
+    <div class="toggle_rsvp_session create">
+      <button name="button" type="submit" class="btn">Check In</button>
+    </div>
+  </td>
+</tr>
