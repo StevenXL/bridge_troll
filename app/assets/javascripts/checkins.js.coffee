@@ -29,7 +29,10 @@ window.setupCheckinsPage = (options) ->
 
   setAddListenerOnCollection = ->
     rsvpSessions.on 'add', (newRsvp) ->
-      console.log('hello')
+      newRsvpJson = newRsvp.toJSON()
+      newRsvpHtml = HandlebarsTemplates['checkins/rsvp_details'](newRsvpJson)
+      $('.datatable-checkins > tbody').append(newRsvpHtml)
+      debugger
 
   initializeCollection()
 
