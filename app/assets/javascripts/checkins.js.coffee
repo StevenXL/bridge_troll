@@ -123,6 +123,10 @@ window.setupCheckinsPage = (options) ->
   rsvpSessions.on 'change', ->
     postCollectionUpdateActions()
 
+  rsvpSessions.on 'remove', (removedRsvp) ->
+    $("#rsvp_session_#{removedRsvp.id}").closest('tr').remove()
+    postCollectionUpdateActions()
+
   if options.poll
     poller.startPolling()
 
