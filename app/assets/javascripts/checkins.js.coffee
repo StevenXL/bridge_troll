@@ -27,14 +27,39 @@ window.setupCheckinsPage = (options) ->
         rsvpSessions.set(response)
         setAddListenerOnCollection()
 
+  initializeCollection()
+
   setAddListenerOnCollection = ->
     rsvpSessions.on 'add', (newRsvp) ->
-      newRsvpJson = newRsvp.toJSON()
-      newRsvpHtml = HandlebarsTemplates['checkins/rsvp_details'](newRsvpJson)
-      $('.datatable-checkins > tbody').append(newRsvpHtml)
-      debugger
+      newRsvpId = addNewRsvp(newRsvp)
+      initializeNewRsvp(newRsvpId)
+      postCollectionUpdateActions()
 
-  initializeCollection()
+  addNewRsvp = (newRsvp) ->
+    newRsvpJson = newRsvp.toJSON()
+    newRsvpHtml = HandlebarsTemplates['checkins/rsvp_details'](newRsvpJson)
+    $('.datatable-checkins > tbody').append(newRsvpHtml)
+    $(newRsvpHtml).children().last().attr('id')
+
+  initializeNewRsvp = (newRsvpId) ->
+    newRsvpTr = $("##{newRsvpId}").closest('tr')
+    precedingRsvpTr = newRsvpTr.prev()
+    setClassOnTr(newRsvpTr, precedingRsvpTr)
+    setClassOnTd(newRsvpTr, precedingRsvpTr)
+
+  setClassOnTr = (newRsvpTr, precedingRsvpTr) ->
+    if precedingRsvpTr.attr('class') == "odd"
+      newRsvpTr.addClass("even")
+    else
+      newRsvpTr.addClass("odd")
+
+    newRsvpTr.attr('role', 'row')
+
+  setClassOnTd = (newRsvpTr, precedingRsvpTr) ->
+    newRsvpTd = newRsvpTr.children().first()
+    precedingRsvpTd = precedingRsvpTr.children().first()
+    sortingClassValue = precedingRsvpTd.attr('class')
+    newRsvpTd.attr('class', sortingClassValue)
 
   updateRsvpCounts = (counts) ->
     for role in [Bridgetroll.Enums.Role.STUDENT, Bridgetroll.Enums.Role.VOLUNTEER]
@@ -78,7 +103,7 @@ window.setupCheckinsPage = (options) ->
     afterPoll: (json) ->
       rsvpSessions.set(json)
 
-  rsvpSessions.on 'change', ->
+  postCollectionUpdateActions = ->
     poller.resetPollingInterval()
     counts = {}
     for role in [Bridgetroll.Enums.Role.STUDENT, Bridgetroll.Enums.Role.VOLUNTEER]
@@ -94,6 +119,9 @@ window.setupCheckinsPage = (options) ->
       $cell.toggleClass('checked-in', sessionRsvp.get('checked_in'))
 
     updateRsvpCounts(counts)
+
+  rsvpSessions.on 'change', ->
+    postCollectionUpdateActions()
 
   if options.poll
     poller.startPolling()
