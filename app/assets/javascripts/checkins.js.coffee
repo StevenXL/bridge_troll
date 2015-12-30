@@ -66,8 +66,8 @@ window.setupCheckinsPage = (options) ->
       $('#checked_in_count_' + role).text(counts[role].checkin[session_id])
       $('#rsvp_count_' + role).text(counts[role].rsvp[session_id])
 
-  $('.toggle_rsvp_session')
-    .on 'click', ->
+  $('.datatable-checkins > tbody')
+    .on 'click', '.toggle_rsvp_session', ->
       $cell = $(this).closest('td')
       rsvp_session_id = $cell.data('rsvp-session-id')
 
